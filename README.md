@@ -1,7 +1,7 @@
 # Adaptive Credit Risk Scoring with Concept Drift Detection
 
-Author: Pranav Sri Vasthav Tenali Gnana (M25DE1069)
-Institute: Indian Institute of Technology Jodhpur, M.Tech Computer Science Engineering
+**Author:** Pranav Sri Vasthav Tenali Gnana (M25DE1069)<br>
+**Institute:** Indian Institute of Technology Jodhpur, M.Tech Computer Science Engineering
 
 **Stack:** Python · XGBoost · LightGBM · scikit-learn · SHAP · MLflow · DVC · Streamlit · pytest
 
