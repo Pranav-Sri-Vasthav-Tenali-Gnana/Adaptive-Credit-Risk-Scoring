@@ -1,0 +1,157 @@
+==============================================================================
+ADAPTIVE CREDIT RISK SCORING WITH CONCEPT DRIFT DETECTION
+==============================================================================
+Author    : Pranav Sri Vasthav Tenali Gnana
+Student ID: M25DE1069
+Institute : IIT Jodhpur
+Generated : 2026-06-28
+
+------------------------------------------------------------------------------
+1. DATASET - Lending Club, yearly windows (cleaned)
+------------------------------------------------------------------------------
+Year            Rows    Default rate
+2015         377,184          20.53%
+2016         298,553          24.69%
+2017         178,817          27.21%
+2018          65,142          27.17%
+TOTAL        919,696
+
+Note: dataset spans 2015-2018 only (Lending Club public release ends 2018).
+Default rate rises steadily over time - a built-in prior/label shift.
+
+------------------------------------------------------------------------------
+2. PHASE 3 KEY FINDING - STATIC 2015 MODEL DEGRADES OVER TIME
+------------------------------------------------------------------------------
+Year      Static AUC   Static F1    AUC drop    drop %
+2015          0.7422      0.2635      0.0000     0.00%
+2016          0.6948      0.3508      0.0474     6.39%
+2017          0.6742      0.4016      0.0680     9.16%
+2018          0.6695      0.4168      0.0727     9.80%
+
+(Static model = XGBoost trained once on 2015, scored on each full year window.)
+
+------------------------------------------------------------------------------
+2b. MULTI-METHOD DRIFT DETECTION (PSI + KS + JS + classifier two-sample)
+------------------------------------------------------------------------------
+Year       MeanPSI    MeanJS   C2ST-AUC   Retrain?
+2016        0.0129    0.0364     0.9769        YES
+2017        0.0352    0.0634     0.9977        YES
+2018        0.0715    0.0932     0.9989        YES
+
+Three independent detectors agree drift is present and growing: PSI/JS rise
+per-feature, and the classifier two-sample AUC (0.5 = indistinguishable)
+climbs as 2018 feature distributions become easier to separate from 2015.
+Operational note: drift fires every year, so drift-triggered retraining
+equals periodic yearly retraining HERE; the trigger's value is skipping
+retrains when stable (a PSI-only policy would skip 2016).
+
+------------------------------------------------------------------------------
+3. PHASE 4 KEY FINDING - STATIC vs ADAPTIVE (same held-out test set)
+------------------------------------------------------------------------------
+Year      Stat AUC  Adap AUC  AUCgain  Stat PRAUC  Adap PRAUC   PRgain
+2016        0.6941    0.7123  +0.0182      0.4002      0.4405  +0.0403
+2017        0.6769    0.7081  +0.0312      0.4106      0.4551  +0.0445
+2018        0.6691    0.7222  +0.0531      0.4015      0.4756  +0.0741
+
+Adaptive = XGBoost retrained on a sliding window of recent years, triggered
+by drift detection. Both AUC (ranking) and PR-AUC (threshold-free precision-
+recall on the imbalanced default class) improve, with the gain growing as
+drift accumulates.
+
+------------------------------------------------------------------------------
+3b. RETRAINING-STRATEGY COMPARISON - does simpler retraining do as well?
+------------------------------------------------------------------------------
+Year         static  naive_recent    sliding   expanding   (AUC-ROC)
+2016         0.6941        0.7135     0.7123      0.7123
+2017         0.6769        0.7128     0.7081      0.7081
+2018         0.6691        0.7297     0.7222      0.7154
+
+naive_recent = most recent year only; sliding = 3-year window (deployed);
+expanding = all history. Finding: ALL retraining beats static, and RECENCY
+beats VOLUME - naive_recent edges out the sliding window, while the expanding
+window is the weakest adaptive strategy by 2018 (0.7154 < 0.7222 < 0.7297),
+i.e. keeping stale 2015-16 data actively hurts once drift sets in. The sliding
+window is the robust compromise: it bounds memory without needing the optimal
+lookback to be known in advance, and tracks naive_recent closely.
+
+------------------------------------------------------------------------------
+   BACKTEST (incl. 2015 anchor) - used for outputs/plots/auc_over_time.png
+------------------------------------------------------------------------------
+Year      Static AUC  Adaptive AUC
+2015          0.7376        0.7376
+2016          0.6941        0.7123
+2017          0.6769        0.7081
+2018          0.6691        0.7222
+
+------------------------------------------------------------------------------
+4. SHAP EXPLAINABILITY STABILITY (static 2015 model vs each year)
+------------------------------------------------------------------------------
+Year      Cosine Sim   Kendall Tau  Jaccard@10
+2016          0.9931        0.9043      1.0000
+2017          0.9806        0.8784      0.8182
+2018          0.9784        0.8827      0.8182
+
+Thresholds: cosine >= 0.95, kendall tau >= 0.8. Overall importance vectors
+stay stable (high cosine/tau), while Jaccard@10 < 1.0 in drift years shows
+real churn in WHICH features make the top-10 (int_rate rising with its
+PSI drift) - caught only after fixing the Jaccard metric (it previously
+collapsed to a constant 1.0 due to a vector-reindexing bug).
+
+------------------------------------------------------------------------------
+5. RESEARCH CONTRIBUTION SUMMARY
+------------------------------------------------------------------------------
+  1. Demonstrated real concept drift in Lending Club credit data (2015-2018)
+     with THREE independent detectors that agree: the default rate rose 20.5%
+     -> 27.2% (KS label drift), PSI and Jensen-Shannon distance flagged
+     int_rate and revol_util as critically drifting, and a classifier
+     two-sample test confirmed growing multivariate covariate drift.
+  2. Quantified the cost of model staleness: a static 2015 XGBoost loses ~9.8%
+     AUC by 2018 (0.7422 -> 0.6695) when left unretrained.
+  3. Showed drift-triggered adaptive retraining (sliding window) recovers
+     performance on both AUC and the threshold-free PR-AUC, with the gain
+     growing as drift accumulates, restoring ~2015-level discrimination by
+     2018.
+  4. Benchmarked retraining STRATEGIES (naive most-recent-year, 3-year sliding
+     window, full expanding window) against a naive-baseline reviewer concern;
+     found that RECENCY beats VOLUME - the expanding window is the weakest
+     adaptive option by 2018 (stale data hurts), naive-recent is strongest, and
+     the deployed sliding window is the robust compromise. Also clarified the
+     drift TRIGGER's value is operational (skipping unnecessary retrains) since
+     drift fires every year on this data.
+  5. Built an end-to-end, MLflow-tracked MLOps loop coupling the multi-method
+     drift detection to automated retraining triggers, with validation-tuned
+     decision thresholds (avoiding the misleading fixed-0.5 F1 artifact) - a
+     deployable monitoring-and-retrain pipeline.
+  6. Added SHAP-based explainability-stability monitoring (cosine, Kendall tau,
+     and a corrected top-N Jaccard); feature-importance shifts (int_rate
+     rising) corroborate the drift signal and give an interpretable early
+     warning alongside metrics.
+
+------------------------------------------------------------------------------
+6. LIMITATIONS & THREATS TO VALIDITY
+------------------------------------------------------------------------------
+  1. Data ends in 2018: the Lending Club public release contains no loans
+     issued 2019-2023, so the COVID-era shock - the most extreme recent credit
+     drift - cannot be tested; the observed drift is the milder 2015-2018
+     trend.
+  2. Single dataset / single market (US unsecured consumer loans), so the
+     magnitude of degradation and recovery may not transfer to other portfolios
+     or geographies.
+  3. Yearly windows are coarse: real monitoring would operate monthly; annual
+     granularity smooths over intra-year drift and limits the number of drift
+     events.
+  4. Labels require loan maturity (only resolved Fully Paid / Charged Off loans
+     are used), so the most recent originations are under-represented - a
+     survivorship/label-latency caveat inherent to credit outcomes.
+  5. SMOTE is applied to balance training; while thresholds are tuned on a
+     held-out real-prevalence validation split, probability calibration (e.g.
+     isotonic) was not performed and would be needed before using scores as
+     probabilities.
+  6. Drift fires every year on this data, so the trigger cannot here be shown
+     to REDUCE retraining frequency versus a periodic schedule - only to avoid
+     retraining when a single detector (PSI) is quiet; a longer, lower-drift
+     series is needed to show that.
+
+==============================================================================
+END OF REPORT
+==============================================================================

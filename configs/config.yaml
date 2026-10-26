@@ -1,0 +1,98 @@
+project:
+  name: "Adaptive Credit Risk Scoring with Concept Drift Detection"
+  author: "Pranav Sri Vasthav Tenali Gnana"
+  id: "M25DE1069"
+  institute: "IIT Jodhpur"
+
+data:
+  raw_path: "data/raw/lending_club.csv"
+  processed_path: "data/processed/cleaned.csv"
+  windows_path: "data/windows/"
+  target_column: "loan_status"
+  date_column: "issue_d"
+  test_size: 0.2
+  random_state: 42
+  # Years to split data into windows
+  start_year: 2015
+  end_year: 2018  # Lending Club public release ends in 2018; no loans issued 2019-2023
+
+features:
+  numerical:
+    - loan_amnt
+    - int_rate
+    - installment
+    - annual_inc
+    - dti
+    - open_acc
+    - pub_rec
+    - revol_bal
+    - revol_util
+    - total_acc
+    - mort_acc
+    - pub_rec_bankruptcies
+  categorical:
+    - term
+    - grade
+    - sub_grade
+    - emp_length
+    - home_ownership
+    - verification_status
+    - purpose
+    - application_type
+
+models:
+  xgboost:
+    n_estimators: 300
+    max_depth: 6
+    learning_rate: 0.05
+    subsample: 0.8
+    colsample_bytree: 0.8
+    use_label_encoder: false
+    eval_metric: "auc"
+    random_state: 42
+    n_jobs: -1
+
+  lightgbm:
+    n_estimators: 300
+    max_depth: 6
+    learning_rate: 0.05
+    subsample: 0.8
+    colsample_bytree: 0.8
+    random_state: 42
+    n_jobs: -1
+    verbose: -1
+
+  logistic_regression:
+    max_iter: 1000
+    random_state: 42
+    C: 1.0
+
+drift:
+  # PSI thresholds
+  psi_threshold_warning: 0.1
+  psi_threshold_critical: 0.2
+  # KS test significance level
+  ks_alpha: 0.05
+  # Sliding window size (years)
+  window_size: 3
+
+shap:
+  # Number of background samples for SHAP explainer
+  background_samples: 100
+  # Number of rows sampled per year to compute SHAP on (full windows are too large)
+  sample_size: 3000
+  # Number of top features to track
+  top_n_features: 10
+  # Stability thresholds
+  cosine_similarity_threshold: 0.95
+  kendall_tau_threshold: 0.8
+
+mlflow:
+  experiment_name: "credit_risk_adaptive"
+  tracking_uri: "mlruns"
+  model_registry_name: "credit_risk_model"
+
+outputs:
+  plots_path: "outputs/plots/"
+  reports_path: "outputs/reports/"
+  models_path: "outputs/models/"

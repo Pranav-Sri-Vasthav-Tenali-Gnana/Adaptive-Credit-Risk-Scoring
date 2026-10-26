@@ -1,0 +1,49 @@
+stages:
+  preprocess:
+    cmd: python src/data/preprocess.py
+    deps:
+      - src/data/preprocess.py
+      - data/raw/lending_club.csv
+      - configs/config.yaml
+    outs:
+      - data/processed/cleaned.csv
+      - data/windows/
+
+  train_baseline:
+    cmd: python -c "from src.models.train import train_baseline; train_baseline()"
+    deps:
+      - src/models/train.py
+      - data/windows/
+      - configs/config.yaml
+    outs:
+      - outputs/models/
+
+  drift_detection:
+    cmd: python -c "from src.drift.detector import run_drift_detection; run_drift_detection()"
+    deps:
+      - src/drift/detector.py
+      - src/drift/psi.py
+      - src/drift/ks_test.py
+      - data/windows/
+      - configs/config.yaml
+    outs:
+      - outputs/reports/drift_report.json
+
+  shap_analysis:
+    cmd: python -c "from src.explainability.shap_analysis import run_shap_analysis; run_shap_analysis()"
+    deps:
+      - src/explainability/shap_analysis.py
+      - outputs/models/
+      - data/windows/
+    outs:
+      - outputs/reports/shap_stability_report.csv
+      - outputs/plots/
+
+  backtest:
+    cmd: python -c "from src.models.evaluate import backtest_over_years; backtest_over_years()"
+    deps:
+      - src/models/evaluate.py
+      - outputs/models/
+      - data/windows/
+    outs:
+      - outputs/reports/backtest_results.csv

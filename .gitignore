@@ -1,0 +1,29 @@
+# Environment
+venv/
+.venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Data: Lending Club is ~1.7 GB and redistributed under Kaggle's terms.
+# Download it yourself (see README); the pipeline rebuilds processed/ and windows/.
+data/raw/
+data/processed/
+data/windows/
+
+# Experiment tracking (local MLflow runs)
+mlruns/
+mlartifacts/
+
+# DVC local cache
+.dvc/cache/
+.dvc/tmp/
+
+# Thesis report drafts
+MTP_Report/*.docx
+MTP_Report/source/
+
+# Secrets, just in case
+*.env
+.env
+*token*.txt

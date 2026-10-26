@@ -1,0 +1,4 @@
+year,static_auc,static_pr_auc,sliding_auc,sliding_pr_auc,naive_recent_auc,naive_recent_pr_auc,expanding_auc,expanding_pr_auc
+2016,0.6941,0.4002,0.7123,0.4405,0.7135,0.4415,0.7123,0.4405
+2017,0.6769,0.4106,0.7081,0.4551,0.7128,0.462,0.7081,0.4551
+2018,0.6691,0.4015,0.7222,0.4756,0.7297,0.4875,0.7154,0.4637

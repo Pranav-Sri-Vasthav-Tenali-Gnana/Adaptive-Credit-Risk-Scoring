@@ -1,0 +1,244 @@
+[
+  {
+    "year": 2016,
+    "mean_psi": 0.0129,
+    "n_flagged_features": 0,
+    "flagged_features": [],
+    "psi_per_feature": {
+      "loan_amnt": 0.0062,
+      "int_rate": 0.0946,
+      "installment": 0.0098,
+      "annual_inc": 0.0037,
+      "dti": 0.0011,
+      "open_acc": 0.0003,
+      "pub_rec": 0.0021,
+      "revol_bal": 0.007,
+      "revol_util": 0.0223,
+      "total_acc": 0.0023,
+      "mort_acc": 0.0044,
+      "pub_rec_bankruptcies": 0.0016
+    },
+    "ks_statistic": 0.0415,
+    "ks_p_value": 0.0,
+    "label_drift": true,
+    "mean_js_distance": 0.0364,
+    "js_per_feature": {
+      "loan_amnt": 0.0333,
+      "int_rate": 0.1301,
+      "installment": 0.042,
+      "annual_inc": 0.0259,
+      "dti": 0.0143,
+      "open_acc": 0.0074,
+      "pub_rec": 0.0197,
+      "revol_bal": 0.0355,
+      "revol_util": 0.0633,
+      "total_acc": 0.0204,
+      "mort_acc": 0.028,
+      "pub_rec_bankruptcies": 0.0171
+    },
+    "classifier_drift_auc": 0.9769,
+    "classifier_drift_auc_std": 0.0021,
+    "classifier_drift_detected": true,
+    "classifier_top_features": [
+      {
+        "feature": "revol_util",
+        "separation_auc": 0.5429
+      },
+      {
+        "feature": "int_rate",
+        "separation_auc": 0.5275
+      },
+      {
+        "feature": "revol_bal",
+        "separation_auc": 0.5256
+      },
+      {
+        "feature": "term_60 months",
+        "separation_auc": 0.5226
+      },
+      {
+        "feature": "annual_inc",
+        "separation_auc": 0.5198
+      },
+      {
+        "feature": "purpose_credit_card",
+        "separation_auc": 0.5179
+      },
+      {
+        "feature": "total_acc",
+        "separation_auc": 0.5162
+      },
+      {
+        "feature": "loan_amnt",
+        "separation_auc": 0.5151
+      }
+    ],
+    "psi_drift": false,
+    "retrain_triggered": true,
+    "reference_default_rate": 0.2053,
+    "current_default_rate": 0.2469
+  },
+  {
+    "year": 2017,
+    "mean_psi": 0.0352,
+    "n_flagged_features": 1,
+    "flagged_features": [
+      "int_rate"
+    ],
+    "psi_per_feature": {
+      "loan_amnt": 0.0285,
+      "int_rate": 0.2018,
+      "installment": 0.0315,
+      "annual_inc": 0.0043,
+      "dti": 0.0067,
+      "open_acc": 0.0044,
+      "pub_rec": 0.001,
+      "revol_bal": 0.0255,
+      "revol_util": 0.0876,
+      "total_acc": 0.0138,
+      "mort_acc": 0.012,
+      "pub_rec_bankruptcies": 0.0053
+    },
+    "ks_statistic": 0.0668,
+    "ks_p_value": 0.0,
+    "label_drift": true,
+    "mean_js_distance": 0.0634,
+    "js_per_feature": {
+      "loan_amnt": 0.0711,
+      "int_rate": 0.1901,
+      "installment": 0.0752,
+      "annual_inc": 0.0277,
+      "dti": 0.0347,
+      "open_acc": 0.0282,
+      "pub_rec": 0.0136,
+      "revol_bal": 0.0676,
+      "revol_util": 0.1251,
+      "total_acc": 0.0498,
+      "mort_acc": 0.0465,
+      "pub_rec_bankruptcies": 0.0309
+    },
+    "classifier_drift_auc": 0.9977,
+    "classifier_drift_auc_std": 0.0005,
+    "classifier_drift_detected": true,
+    "classifier_top_features": [
+      {
+        "feature": "revol_util",
+        "separation_auc": 0.5848
+      },
+      {
+        "feature": "int_rate",
+        "separation_auc": 0.5692
+      },
+      {
+        "feature": "revol_bal",
+        "separation_auc": 0.5467
+      },
+      {
+        "feature": "total_acc",
+        "separation_auc": 0.5411
+      },
+      {
+        "feature": "application_type_Joint App",
+        "separation_auc": 0.5404
+      },
+      {
+        "feature": "loan_amnt",
+        "separation_auc": 0.5275
+      },
+      {
+        "feature": "purpose_credit_card",
+        "separation_auc": 0.5249
+      },
+      {
+        "feature": "dti",
+        "separation_auc": 0.5231
+      }
+    ],
+    "psi_drift": true,
+    "retrain_triggered": true,
+    "reference_default_rate": 0.2053,
+    "current_default_rate": 0.2721
+  },
+  {
+    "year": 2018,
+    "mean_psi": 0.0715,
+    "n_flagged_features": 2,
+    "flagged_features": [
+      "revol_util",
+      "int_rate"
+    ],
+    "psi_per_feature": {
+      "loan_amnt": 0.0423,
+      "int_rate": 0.2419,
+      "installment": 0.0492,
+      "annual_inc": 0.0076,
+      "dti": 0.0471,
+      "open_acc": 0.0261,
+      "pub_rec": 0.0088,
+      "revol_bal": 0.0963,
+      "revol_util": 0.2962,
+      "total_acc": 0.0299,
+      "mort_acc": 0.011,
+      "pub_rec_bankruptcies": 0.0016
+    },
+    "ks_statistic": 0.0664,
+    "ks_p_value": 0.0,
+    "label_drift": true,
+    "mean_js_distance": 0.0932,
+    "js_per_feature": {
+      "loan_amnt": 0.086,
+      "int_rate": 0.2081,
+      "installment": 0.094,
+      "annual_inc": 0.037,
+      "dti": 0.0918,
+      "open_acc": 0.0683,
+      "pub_rec": 0.0397,
+      "revol_bal": 0.1307,
+      "revol_util": 0.2279,
+      "total_acc": 0.0734,
+      "mort_acc": 0.0444,
+      "pub_rec_bankruptcies": 0.0169
+    },
+    "classifier_drift_auc": 0.9989,
+    "classifier_drift_auc_std": 0.0002,
+    "classifier_drift_detected": true,
+    "classifier_top_features": [
+      {
+        "feature": "revol_util",
+        "separation_auc": 0.6482
+      },
+      {
+        "feature": "revol_bal",
+        "separation_auc": 0.5775
+      },
+      {
+        "feature": "application_type_Joint App",
+        "separation_auc": 0.5649
+      },
+      {
+        "feature": "int_rate",
+        "separation_auc": 0.561
+      },
+      {
+        "feature": "total_acc",
+        "separation_auc": 0.5506
+      },
+      {
+        "feature": "dti",
+        "separation_auc": 0.5457
+      },
+      {
+        "feature": "purpose_debt_consolidation",
+        "separation_auc": 0.5382
+      },
+      {
+        "feature": "open_acc",
+        "separation_auc": 0.5359
+      }
+    ],
+    "psi_drift": true,
+    "retrain_triggered": true,
+    "reference_default_rate": 0.2053,
+    "current_default_rate": 0.2717
+  }
+]

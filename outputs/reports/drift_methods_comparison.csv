@@ -1,0 +1,4 @@
+year,mean_psi,psi_critical_features,ks_label_drift,mean_js_distance,classifier_drift_auc,classifier_drift_detected,trigger_psi_only,trigger_label_only,trigger_classifier_only,trigger_any
+2016,0.0129,0,True,0.0364,0.9769,True,False,True,True,True
+2017,0.0352,1,True,0.0634,0.9977,True,True,True,True,True
+2018,0.0715,2,True,0.0932,0.9989,True,True,True,True,True

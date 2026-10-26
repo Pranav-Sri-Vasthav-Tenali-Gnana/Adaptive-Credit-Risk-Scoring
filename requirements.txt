@@ -1,0 +1,34 @@
+# Core ML
+xgboost==2.0.3
+lightgbm==4.3.0
+scikit-learn==1.5.2
+pandas==2.2.3
+numpy==1.26.4
+
+# Explainability
+shap==0.46.0
+
+# MLOps
+mlflow==2.12.1
+dvc==3.49.0
+
+# Drift Detection
+scipy==1.14.0
+
+# Visualization
+matplotlib==3.8.4
+seaborn==0.13.2
+plotly==5.20.0
+
+# Dashboard (interactive results UI + live drift demo)
+streamlit==1.39.1
+
+# Utilities
+pyyaml==6.0.1
+tqdm==4.66.2
+joblib==1.4.2
+imbalanced-learn==0.12.2
+
+# Notebook
+jupyter==1.0.0
+ipykernel==6.29.4

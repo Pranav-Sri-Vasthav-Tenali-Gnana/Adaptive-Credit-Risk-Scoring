@@ -1,0 +1,181 @@
+[
+  {
+    "year": 2016,
+    "n_test": 59711,
+    "static": {
+      "auc": 0.6941,
+      "pr_auc": 0.4002,
+      "f1_05": 0.3473,
+      "f1_tuned": 0.4704,
+      "threshold": 0.225
+    },
+    "strategies": {
+      "sliding": {
+        "auc": 0.7123,
+        "pr_auc": 0.4405,
+        "f1_05": 0.2125,
+        "f1_tuned": 0.484,
+        "threshold": 0.2249,
+        "train_years": [
+          2015,
+          2016
+        ],
+        "train_size_smote": 905282
+      },
+      "naive_recent": {
+        "auc": 0.7135,
+        "pr_auc": 0.4415,
+        "f1_05": 0.2335,
+        "f1_tuned": 0.4847,
+        "threshold": 0.2393,
+        "train_years": [
+          2016
+        ],
+        "train_size_smote": 305798
+      },
+      "expanding": {
+        "auc": 0.7123,
+        "pr_auc": 0.4405,
+        "f1_05": 0.2125,
+        "f1_tuned": 0.484,
+        "threshold": 0.2249,
+        "train_years": [
+          2015,
+          2016
+        ],
+        "train_size_smote": 905282
+      }
+    },
+    "static_auc": 0.6941,
+    "adaptive_auc": 0.7123,
+    "auc_gain": 0.0182,
+    "static_pr_auc": 0.4002,
+    "adaptive_pr_auc": 0.4405,
+    "pr_auc_gain": 0.0403,
+    "static_f1_05": 0.3473,
+    "adaptive_f1_05": 0.2125,
+    "static_f1_tuned": 0.4704,
+    "adaptive_f1_tuned": 0.484
+  },
+  {
+    "year": 2017,
+    "n_test": 35764,
+    "static": {
+      "auc": 0.6769,
+      "pr_auc": 0.4106,
+      "f1_05": 0.4026,
+      "f1_tuned": 0.4888,
+      "threshold": 0.1955
+    },
+    "strategies": {
+      "sliding": {
+        "auc": 0.7081,
+        "pr_auc": 0.4551,
+        "f1_05": 0.2183,
+        "f1_tuned": 0.5065,
+        "threshold": 0.2236,
+        "train_years": [
+          2015,
+          2016,
+          2017
+        ],
+        "train_size_smote": 1226196
+      },
+      "naive_recent": {
+        "auc": 0.7128,
+        "pr_auc": 0.462,
+        "f1_05": 0.2726,
+        "f1_tuned": 0.5082,
+        "threshold": 0.2775,
+        "train_years": [
+          2017
+        ],
+        "train_size_smote": 177006
+      },
+      "expanding": {
+        "auc": 0.7081,
+        "pr_auc": 0.4551,
+        "f1_05": 0.2183,
+        "f1_tuned": 0.5065,
+        "threshold": 0.2236,
+        "train_years": [
+          2015,
+          2016,
+          2017
+        ],
+        "train_size_smote": 1226196
+      }
+    },
+    "static_auc": 0.6769,
+    "adaptive_auc": 0.7081,
+    "auc_gain": 0.0312,
+    "static_pr_auc": 0.4106,
+    "adaptive_pr_auc": 0.4551,
+    "pr_auc_gain": 0.0445,
+    "static_f1_05": 0.4026,
+    "adaptive_f1_05": 0.2183,
+    "static_f1_tuned": 0.4888,
+    "adaptive_f1_tuned": 0.5065
+  },
+  {
+    "year": 2018,
+    "n_test": 13029,
+    "static": {
+      "auc": 0.6691,
+      "pr_auc": 0.4015,
+      "f1_05": 0.4148,
+      "f1_tuned": 0.4761,
+      "threshold": 0.3253
+    },
+    "strategies": {
+      "sliding": {
+        "auc": 0.7222,
+        "pr_auc": 0.4756,
+        "f1_05": 0.2477,
+        "f1_tuned": 0.5166,
+        "threshold": 0.2308,
+        "train_years": [
+          2016,
+          2017,
+          2018
+        ],
+        "train_size_smote": 774534
+      },
+      "naive_recent": {
+        "auc": 0.7297,
+        "pr_auc": 0.4875,
+        "f1_05": 0.3243,
+        "f1_tuned": 0.5227,
+        "threshold": 0.2455,
+        "train_years": [
+          2018
+        ],
+        "train_size_smote": 64524
+      },
+      "expanding": {
+        "auc": 0.7154,
+        "pr_auc": 0.4637,
+        "f1_05": 0.2274,
+        "f1_tuned": 0.513,
+        "threshold": 0.2427,
+        "train_years": [
+          2015,
+          2016,
+          2017,
+          2018
+        ],
+        "train_size_smote": 1374018
+      }
+    },
+    "static_auc": 0.6691,
+    "adaptive_auc": 0.7222,
+    "auc_gain": 0.0531,
+    "static_pr_auc": 0.4015,
+    "adaptive_pr_auc": 0.4756,
+    "pr_auc_gain": 0.0741,
+    "static_f1_05": 0.4148,
+    "adaptive_f1_05": 0.2477,
+    "static_f1_tuned": 0.4761,
+    "adaptive_f1_tuned": 0.5166
+  }
+]
